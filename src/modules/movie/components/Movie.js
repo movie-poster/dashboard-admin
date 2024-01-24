@@ -1,24 +1,28 @@
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import SearchDocument from './SearchDocument';
-import ModalDirector from './ModalDirector';
-import ListDirector from './ListDirector';
+import ListMovie from './ListMovie';
 import BreadcrumbCustom from "../../../app/components/BreadcrumCustom";
 
-import { cleanData } from "../../../reducers/director/reducerDirector";
+import { cleanData } from "../../../reducers/movie/reducerMovie";
 
-const Director = () => {
-    const [show, setShow] = useState(false);
+const Movie = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
+
+    const handleCreate = () => {
+        dispatch(cleanData());
+        history.push("/movies/create");
+    }
 
     return (
         <div className="container-fluid max-height-overflow-y">
             <div className="row">
                 <div className="col">
                     <BreadcrumbCustom
-                        title="Directores"
-                        activeRoute="Listar directores"
+                        title="Películas"
+                        activeRoute="Listar películas"
                     />
                 </div>
             </div>
@@ -28,23 +32,21 @@ const Director = () => {
                     <SearchDocument />
                 </div>
                 <div className="col-4">
-                    <button title="Crear nuevo director" className="btn btn-success mt-1" type="button" onClick={() => { dispatch(cleanData()); setShow(true) }}>
+                    <button title="Crear nuevo director" className="btn btn-success mt-1" type="button" onClick={handleCreate}>
                         <i className="fa-solid fa-plus text-white me-2 fs-5" />
-                        Crear director
+                        Crear película
                     </button>
                 </div>
             </div>
             <div className="row">
                 <div className="col">
                     <div className="table-data">
-                        <ListDirector setShow={setShow} show={show} />
+                        <ListMovie />
                     </div>
                 </div>
             </div>
-
-            <ModalDirector show={show} setShow={setShow} />
         </div >
     )
 };
 
-export default Director;
+export default Movie;

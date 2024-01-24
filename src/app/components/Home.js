@@ -11,28 +11,59 @@ import Header from './layouts/Header';
 import Menu from "./layouts/Menu";
 import ToastNotify from "./ToastNotify";
 import LoadingCustom from "./LoadingCustom";
-
-//Components Users
-import Users from "../../modules/Usuarios/components/users";
-import FormUser from "../../modules/Usuarios/components/FormUser";
+import Director from "../../modules/directors/components/Director";
+import Actor from "../../modules/actors/components/Actor";
+import Movie from "../../modules/movie/components/Movie";
+import FormMovie from "../../modules/movie/components/FormMovie";
 
 import GeneralService from "../../services/GeneralService";
-import Director from "../../modules/directors/components/Director";
+import { setListActor } from "../../reducers/actor/reducerActor";
+import { setListDirector } from "../../reducers/director/reducerDirector";
+import { setListMovie } from "../../reducers/movie/reducerMovie";
+import { setListGenre } from "../../reducers/genre/reducerGenre";
+import Genre from "../../modules/genre/components/Genre";
 
 const Home = () => {
     const { show } = useSelector(state => state.toastSlice);
+    const { page: pageActor, pageSize: pageSizeActor } = useSelector(state => state.actorSlice);
+    const { page: pageDirector, pageSize: pageSizeDirector } = useSelector(state => state.directorSlice);
+    const { page: pageGenre, pageSize: pageSizeGenre } = useSelector(state => state.genreSlice);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        loadForms();
-    }, []);
-
-    const loadForms = async () => {
-        /* const service = new GeneralService("form");
-        const response = await service.getList(1000);
-        const { form = [] } = response;
-        dispatch(setListForm({ value: form })); */
+    const loadActor = async () => {
+        const service = new GeneralService("actor");
+        const res = await service.getList({ page: pageActor, pageSize: pageSizeActor });
+        const { actors = [] } = res;
+        dispatch(setListActor({ value: actors }));
     }
+
+    const loadDirector = async () => {
+        const service = new GeneralService("director");
+        const res = await service.getList({ page: pageDirector, pageSize: pageSizeDirector });
+        const { directors = [] } = res;
+        dispatch(setListDirector({ value: directors }));
+    }
+
+    const loadMovie = async () => {
+        const service = new GeneralService("movie");
+        const res = await service.getList({ page: pageDirector, pageSize: pageSizeDirector });
+        const { movies = [] } = res;
+        dispatch(setListMovie({ value: movies }));
+    }
+
+    const loadGenre = async () => {
+        const service = new GeneralService("genre");
+        const res = await service.getList({ page: pageDirector, pageSize: pageSizeDirector });
+        const { genres = [] } = res;
+        dispatch(setListGenre({ value: genres }));
+    }
+
+    useEffect(() => {
+        loadActor();
+        loadDirector();
+        loadMovie();
+        loadGenre();
+    }, []);
 
     return (
         <>
@@ -58,10 +89,13 @@ const Home = () => {
                                         <main>
                                             {/* <Route exact path="/" > <DashboardView /> </Route> */}
 
-                                            {/* Rutas de usuarios */}
                                             <Route exact path="/directors/list"> <Director /> </Route>
-                                            <Route exact path="/directors/create"> <FormUser /> </Route>
-                                            <Route exact path="/directors/edit/:id"> <FormUser /> </Route>
+                                            <Route exact path="/actors/list"> <Actor /> </Route>
+                                            <Route exact path="/genres/list"> <Genre /> </Route>
+
+                                            <Route exact path="/movies/list"> <Movie /> </Route>
+                                            <Route exact path="/movies/create"> <FormMovie /> </Route>
+                                            <Route exact path="/movies/edit/:id"> <FormMovie /> </Route>
 
                                         </main>
                                     </div>

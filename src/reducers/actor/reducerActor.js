@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const directorSlice = createSlice({
-    name: 'directorSlice',
+export const actorSlice = createSlice({
+    name: 'actorSlice',
     initialState: {
-        selectedDirector: {
+        selectedActor: {
             id: 0,
             name: "",
             birthdate: "",
@@ -17,23 +17,23 @@ export const directorSlice = createSlice({
         pageSize: 10,
     },
     reducers: {
-        setListDirector: (state, action) => {
+        setListActor: (state, action) => {
             state.list = action.payload.value;
             state.filtered = action.payload.value;
         },
-        setSelectedDirector: (state, action) => {
-            state.selectedDirector = action.payload.value;
+        setSelectedActor: (state, action) => {
+            state.selectedActor = action.payload.value;
         },
-        deleteDirectorList: (state, action) => {
+        deleteActorList: (state, action) => {
             const newList = state.list.filter(e => e.id !== action.payload.value)
             state.list = newList;
             state.filtered = newList;
         },
         reducerForm: (state, action) => {
-            state.selectedDirector[action.payload.key] = action.payload.value;
+            state.selectedActor[action.payload.key] = action.payload.value;
         },
         cleanData: (state, action) => {
-            state.selectedDirector = {
+            state.selectedActor = {
                 id: 0,
                 name: "",
                 birthdate: "",
@@ -42,11 +42,11 @@ export const directorSlice = createSlice({
                 updated_at: "",
             };
         },
-        insertDirector: (state, action) => {
+        insertActor: (state, action) => {
             state.list.push(action.payload.value);
             state.filtered.push(action.payload.value);
         },
-        updateDirector: (state, action) => {
+        updateActor: (state, action) => {
             const director = action.payload.value;
             const modificadaList = state.list.map((e) => {
                 if (e.id === director.id) {
@@ -62,7 +62,7 @@ export const directorSlice = createSlice({
             });
             state.list = modificadaList;
             state.filtered = modificadaListFilter;
-            state.selectedDirector = {
+            state.selectedActor = {
                 id: 0,
                 name: "",
                 birthdate: "",
@@ -71,7 +71,7 @@ export const directorSlice = createSlice({
                 updated_at: "",
             };
         },
-        searchTextDirector: (state, action) => {
+        searchTextActor: (state, action) => {
             if (action.payload.value === "") {
                 state.filtered = state.list;
                 return;
@@ -89,16 +89,16 @@ export const directorSlice = createSlice({
 });
 
 export const {
-    setListDirector,
-    setSelectedDirector,
-    deleteDirectorList,
+    setListActor,
+    setSelectedActor,
+    deleteActorList,
     reducerForm,
     cleanData,
-    insertDirector,
-    updateDirector,
-    searchTextDirector,
+    insertActor,
+    updateActor,
+    searchTextActor,
     setPage,
     setPageSize,
-} = directorSlice.actions;
+} = actorSlice.actions;
 
-export default directorSlice.reducer;
+export default actorSlice.reducer;

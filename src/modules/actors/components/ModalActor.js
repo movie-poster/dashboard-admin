@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import GeneralService from '../../../services/GeneralService';
 import { MessageError, MessageSuccess } from '../../../utils/message';
-import { cleanData, insertDirector, reducerForm, updateDirector } from '../../../reducers/director/reducerDirector';
+import { cleanData, insertActor, reducerForm, updateActor } from '../../../reducers/actor/reducerActor';
 import { ID_NOT_DEFINED } from '../../../constant/constant';
 import { encodeFileBase64, isURL } from '../../../utils/encodeFile';
 
 import Profile from '../../../assets/profile-pic.svg';
 import { hideLoading, showLoading } from '../../../reducers/main/loadingReducer';
 
-const ModalDirector = ({ show, setShow }) => {
-    const { selectedDirector } = useSelector(state => state.directorSlice);
+const ModalActor = ({ show, setShow }) => {
+    const { selectedActor } = useSelector(state => state.actorSlice);
 
     const dispatch = useDispatch();
 
@@ -24,15 +24,15 @@ const ModalDirector = ({ show, setShow }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const service = new GeneralService("director");
+        const service = new GeneralService("actor");
 
         dispatch(showLoading());
-        if (selectedDirector.id === ID_NOT_DEFINED) {
-            const res = await service.post(selectedDirector);
+        if (selectedActor.id === ID_NOT_DEFINED) {
+            const res = await service.post(selectedActor);
             dispatch(hideLoading());
             if (res.is_ok) {
                 MessageSuccess(res.message);
-                dispatch(insertDirector({ value: res.director }));
+                dispatch(insertActor({ value: res.actor }));
                 setShow(false);
                 dispatch(cleanData());
                 return;
@@ -40,12 +40,11 @@ const ModalDirector = ({ show, setShow }) => {
             MessageError(res.message);
             return;
         }
-
-        const res = await service.update(selectedDirector);
+        const res = await service.update(selectedActor);
         dispatch(hideLoading());
         if (res.is_ok) {
             MessageSuccess(res.message);
-            dispatch(updateDirector({ value: res.director }));
+            dispatch(updateActor({ value: res.actor }));
             setShow(false);
             dispatch(cleanData());
             return;
@@ -66,13 +65,13 @@ const ModalDirector = ({ show, setShow }) => {
     }
 
     const showImage = () => {
-        if (selectedDirector.id === ID_NOT_DEFINED || !isURL(selectedDirector.avatar)) {
-            return selectedDirector.avatar === '' ?
+        if (selectedActor.id === ID_NOT_DEFINED || !isURL(selectedActor.avatar)) {
+            return selectedActor.avatar === '' ?
                 <img className="animate__animated animate__fadeIn animate__slow" src={Profile} style={{ width: '100px', height: '100px' }} alt="" />
                 :
-                <img className="animate__animated animate__fadeIn animate__slow" src={`data:image/png;base64,${selectedDirector.avatar}`} style={{ width: '100px', height: '100px' }} alt="" />
+                <img className="animate__animated animate__fadeIn animate__slow" src={`data:image/png;base64,${selectedActor.avatar}`} style={{ width: '100px', height: '100px' }} alt="" />
         }
-        return (<img className="animate__animated animate__fadeIn animate__slow" src={selectedDirector.avatar} style={{ width: '100px', height: '100px' }} alt={selectedDirector.name} />);
+        return (<img className="animate__animated animate__fadeIn animate__slow" src={selectedActor.avatar} style={{ width: '100px', height: '100px' }} alt={selectedActor.name} />);
     }
 
     return (
@@ -83,7 +82,7 @@ const ModalDirector = ({ show, setShow }) => {
                         <div className='row'>
                             <div className='col-1'>
                                 {
-                                    selectedDirector.id === ID_NOT_DEFINED ?
+                                    selectedActor.id === ID_NOT_DEFINED ?
                                         <i className="fa-solid fa-circle-plus mt-2 animate__animated animate__backInRight fs-4"></i>
                                         :
                                         <i className="fa-solid fa-pen-to-square mt-2 animate__animated animate__backInRight fs-4"></i>
@@ -92,10 +91,10 @@ const ModalDirector = ({ show, setShow }) => {
                             <div className='col'>
                                 <h5 className="mt-2">
                                     {
-                                        selectedDirector.id === ID_NOT_DEFINED ?
-                                            "Crear Director"
+                                        selectedActor.id === ID_NOT_DEFINED ?
+                                            "Crear Actor"
                                             :
-                                            "Editar Director"
+                                            "Editar Actor"
                                     }
                                 </h5>
                             </div>
@@ -128,7 +127,7 @@ const ModalDirector = ({ show, setShow }) => {
                                     type="text"
                                     className="form-control mt-1"
                                     name="name"
-                                    value={selectedDirector.name}
+                                    value={selectedActor.name}
                                     maxLength={50}
                                     minLength={3}
                                     placeholder="Ingrese un nombre"
@@ -146,7 +145,7 @@ const ModalDirector = ({ show, setShow }) => {
                                     type="date"
                                     className="form-control mt-1"
                                     name="birthdate"
-                                    value={selectedDirector.birthdate}
+                                    value={selectedActor.birthdate}
                                     onChange={setData}
                                     required
                                 />
@@ -158,7 +157,7 @@ const ModalDirector = ({ show, setShow }) => {
                     <button type="submit" className={`btn btn-success mx-auto rounded-3 button-save-document'`}>
                         <i className="fa-solid fa-paper-plane me-2" style={{ fontSize: '16px' }}></i>
                         {
-                            selectedDirector.id === ID_NOT_DEFINED ?
+                            selectedActor.id === ID_NOT_DEFINED ?
                                 "Agregar"
                                 :
                                 "Actualizar"
@@ -170,4 +169,4 @@ const ModalDirector = ({ show, setShow }) => {
     )
 }
 
-export default ModalDirector;
+export default ModalActor;

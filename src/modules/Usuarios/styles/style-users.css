@@ -1,11 +1,11 @@
 :root {
-    --body-bg: #f5f8ff;
-    --box-bg: #fff;
-    --input-bg: #f5f8ff;
-    --txt-color: #2f2d2f;
-    --txt-second-color: #ccc;
-    --border-color: #4267b2;
-    --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --body-bg: #f5f8ff;
+  --box-bg: #fff;
+  --input-bg: #f5f8ff;
+  --txt-color: #2f2d2f;
+  --txt-second-color: #ccc;
+  --border-color: #4267b2;
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .box {
@@ -66,35 +66,7 @@
 
 /*  Style upload */
 
-.upload {
-  width: 100px;
-  position: relative;
-}
 
-.upload img {
-  border-radius: 50%;
-  border: 2px solid #5256ad;
-  margin-left: 16px;
-}
-
-.upload .round {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #00B4FF;
-  width: 32px;
-  height: 32px;
-  line-height: 33px;
-  text-align: center;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.upload .round input[type="file"] {
-  position: absolute;
-  transform: scale(2);
-  opacity: 0;
-}
 
 input[type=file]::-webkit-file-upload-button {
   cursor: pointer;
@@ -104,15 +76,15 @@ input[type=file]::-webkit-file-upload-button {
   color: red;
 }
 
-.btn-save{
+.btn-save {
   height: 36px;
-padding: 0 16px;
-border-radius: 36px;
-background: var(--blue);
-color: #FBFBFB;
-display: flex;
-justify-content: center;
-align-items: center;
-grid-gap: 10px;
-font-weight: 500;
+  padding: 0 16px;
+  border-radius: 36px;
+  background: var(--blue);
+  color: #FBFBFB;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  font-weight: 500;
 }

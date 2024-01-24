@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import SearchDocument from './SearchDocument';
-import ModalDirector from './ModalDirector';
-import ListDirector from './ListDirector';
+import ModalActor from './ModalActor';
+import ListActor from './ListActor';
 import BreadcrumbCustom from "../../../app/components/BreadcrumCustom";
 
-import { cleanData } from "../../../reducers/director/reducerDirector";
+import { cleanData } from "../../../reducers/actor/reducerActor";
 
-const Director = () => {
+const Actor = () => {
     const [show, setShow] = useState(false);
     const dispatch = useDispatch();
 
@@ -17,8 +17,8 @@ const Director = () => {
             <div className="row">
                 <div className="col">
                     <BreadcrumbCustom
-                        title="Directores"
-                        activeRoute="Listar directores"
+                        title="Actores"
+                        activeRoute="Listar actores"
                     />
                 </div>
             </div>
@@ -28,23 +28,23 @@ const Director = () => {
                     <SearchDocument />
                 </div>
                 <div className="col-4">
-                    <button title="Crear nuevo director" className="btn btn-success mt-1" type="button" onClick={() => { dispatch(cleanData()); setShow(true) }}>
+                    <button title="Crear nuevo actor" className="btn btn-success mt-1" type="button" onClick={() => { dispatch(cleanData()); setShow(true) }}>
                         <i className="fa-solid fa-plus text-white me-2 fs-5" />
-                        Crear director
+                        Crear actor
                     </button>
                 </div>
             </div>
             <div className="row">
                 <div className="col">
                     <div className="table-data">
-                        <ListDirector setShow={setShow} show={show} />
+                        <ListActor setShow={setShow} show={show} />
                     </div>
                 </div>
             </div>
 
-            <ModalDirector show={show} setShow={setShow} />
+            <ModalActor show={show} setShow={setShow} />
         </div >
     )
 };
 
-export default Director;
+export default Actor;

@@ -5,19 +5,19 @@ import IconButton from "../../../app/components/IconButton";
 import GeneralService from "../../../services/GeneralService";
 import { MessageError, MessageSuccess } from "../../../utils/message";
 import confirmDelete from "../../../utils/confirmDelete";
-import { cleanData, deleteDirectorList, setSelectedDirector } from "../../../reducers/director/reducerDirector";
+import { cleanData, deleteActorList, setSelectedActor } from "../../../reducers/actor/reducerActor";
 import { formatDate } from "../../../utils/formatDate";
 
-const ListDirector = ({ setShow }) => {
-    const { filtered } = useSelector(state => state.directorSlice);
+const ListActor = ({ setShow }) => {
+    const { filtered } = useSelector(state => state.actorSlice);
     const dispatch = useDispatch();
 
-    const deleteDirector = async (id) => {
-        const service = new GeneralService("director");
+    const deleteActor = async (id) => {
+        const service = new GeneralService("actor");
         const res = await service.delete(id);
         if (res.is_ok) {
             MessageSuccess(res.message);
-            dispatch(deleteDirectorList({ value: id }));
+            dispatch(deleteActorList({ value: id }));
             return;
         }
         MessageError(res.message);
@@ -29,7 +29,7 @@ const ListDirector = ({ setShow }) => {
                 {
                     filtered.length === 0 ?
                         <div className="alert alert-warning text-center mt-2" role="alert">
-                            No hay directores que mostrar
+                            No hay actores que mostrar
                         </div>
                         :
                         <div className="d-block rounded-3 clip-hide">
@@ -62,17 +62,17 @@ const ListDirector = ({ setShow }) => {
                                                 <td>
                                                     <IconButton
                                                         icon="fa-solid fa-pen-to-square text-green"
-                                                        title="Editar director"
+                                                        title="Editar actor"
                                                         onClick={() => {
                                                             dispatch(cleanData());
-                                                            dispatch(setSelectedDirector({ value: item }));
+                                                            dispatch(setSelectedActor({ value: item }));
                                                             setShow(true);
                                                         }}
                                                     />
                                                     <IconButton
                                                         icon="fa-solid fa-trash-can text-red"
-                                                        title="Eliminar director"
-                                                        onClick={async () => await confirmDelete(() => deleteDirector(item.id))}
+                                                        title="Eliminar actor"
+                                                        onClick={async () => await confirmDelete(() => deleteActor(item.id))}
                                                     />
                                                 </td>
                                                 <td></td>
@@ -90,4 +90,4 @@ const ListDirector = ({ setShow }) => {
 
 }
 
-export default ListDirector;
+export default ListActor;

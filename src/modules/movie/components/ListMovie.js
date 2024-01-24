@@ -1,27 +1,39 @@
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 import IconButton from "../../../app/components/IconButton";
 
 import GeneralService from "../../../services/GeneralService";
 import { MessageError, MessageSuccess } from "../../../utils/message";
 import confirmDelete from "../../../utils/confirmDelete";
-import { cleanData, deleteDirectorList, setSelectedDirector } from "../../../reducers/director/reducerDirector";
-import { formatDate } from "../../../utils/formatDate";
+import { cleanData, deleteMovieList, setListMovie, setSelectedMovie } from "../../../reducers/movie/reducerMovie";
 
-const ListDirector = ({ setShow }) => {
-    const { filtered } = useSelector(state => state.directorSlice);
+const ListMovie = () => {
+    const { filtered } = useSelector(state => state.movieSlice);
     const dispatch = useDispatch();
+    const history = useHistory();
 
-    const deleteDirector = async (id) => {
-        const service = new GeneralService("director");
+    const loadMovie = async () => {
+        const service = new GeneralService("movie");
+        const res = await service.getList({ page: 0, pageSize: 10 });
+        const { movies = [] } = res;
+        dispatch(setListMovie({ value: movies }));
+    }
+
+    const deleteMovie = async (id) => {
+        const service = new GeneralService("movie");
         const res = await service.delete(id);
         if (res.is_ok) {
             MessageSuccess(res.message);
-            dispatch(deleteDirectorList({ value: id }));
+            dispatch(deleteMovieList({ value: id }));
             return;
         }
         MessageError(res.message);
     }
+
+    useEffect(() => {
+        loadMovie();
+    }, []);
 
     return (
         <>
@@ -29,7 +41,7 @@ const ListDirector = ({ setShow }) => {
                 {
                     filtered.length === 0 ?
                         <div className="alert alert-warning text-center mt-2" role="alert">
-                            No hay directores que mostrar
+                            No hay películas que mostrar
                         </div>
                         :
                         <div className="d-block rounded-3 clip-hide">
@@ -38,9 +50,9 @@ const ListDirector = ({ setShow }) => {
                                     <tr>
                                         <th></th>
                                         <th>#</th>
-                                        <th>Nombre</th>
-                                        <th>Fecha de nacimiento</th>
-                                        <th>avatar</th>
+                                        <th>Título</th>
+                                        <th>Año</th>
+                                        <th>Duración</th>
                                         <th>Acciones</th>
                                         <th></th>
                                     </tr>
@@ -51,28 +63,24 @@ const ListDirector = ({ setShow }) => {
                                             <tr key={item.id}>
                                                 <td></td>
                                                 <td>{i + 1}.</td>
-                                                <td style={{ maxWidth: "300px" }}>{item.name}</td>
-                                                <td>{formatDate(item.birthdate)}</td>
-                                                <td>
-                                                    <div className="avatar-table">
-                                                        <img src={item.avatar} alt={item.name}/>
-                                                    </div>
-                                                </td>
+                                                <td style={{ maxWidth: "300px" }}>{item.title}</td>
+                                                <td>{item.year}</td>
+                                                <td>{item.duration}</td>
 
                                                 <td>
-                                                    <IconButton
+                                                    {/* <IconButton
                                                         icon="fa-solid fa-pen-to-square text-green"
-                                                        title="Editar director"
+                                                        title="Editar película"
                                                         onClick={() => {
                                                             dispatch(cleanData());
-                                                            dispatch(setSelectedDirector({ value: item }));
-                                                            setShow(true);
+                                                            dispatch(setSelectedMovie({ value: item }));
+                                                            history.push("/movies/edit/"+item.id);
                                                         }}
-                                                    />
+                                                    /> */}
                                                     <IconButton
                                                         icon="fa-solid fa-trash-can text-red"
-                                                        title="Eliminar director"
-                                                        onClick={async () => await confirmDelete(() => deleteDirector(item.id))}
+                                                        title="Eliminar película"
+                                                        onClick={async () => await confirmDelete(() => deleteMovie(item.id))}
                                                     />
                                                 </td>
                                                 <td></td>
@@ -90,4 +98,4 @@ const ListDirector = ({ setShow }) => {
 
 }
 
-export default ListDirector;
+export default ListMovie;

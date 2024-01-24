@@ -5,19 +5,18 @@ import IconButton from "../../../app/components/IconButton";
 import GeneralService from "../../../services/GeneralService";
 import { MessageError, MessageSuccess } from "../../../utils/message";
 import confirmDelete from "../../../utils/confirmDelete";
-import { cleanData, deleteDirectorList, setSelectedDirector } from "../../../reducers/director/reducerDirector";
-import { formatDate } from "../../../utils/formatDate";
+import { cleanData, deleteGenreList, setSelectedGenre } from "../../../reducers/genre/reducerGenre";
 
-const ListDirector = ({ setShow }) => {
-    const { filtered } = useSelector(state => state.directorSlice);
+const ListGenre = ({ setShow }) => {
+    const { filtered } = useSelector(state => state.genreSlice);
     const dispatch = useDispatch();
 
-    const deleteDirector = async (id) => {
-        const service = new GeneralService("director");
+    const deleteGenre = async (id) => {
+        const service = new GeneralService("genre");
         const res = await service.delete(id);
         if (res.is_ok) {
             MessageSuccess(res.message);
-            dispatch(deleteDirectorList({ value: id }));
+            dispatch(deleteGenreList({ value: id }));
             return;
         }
         MessageError(res.message);
@@ -29,7 +28,7 @@ const ListDirector = ({ setShow }) => {
                 {
                     filtered.length === 0 ?
                         <div className="alert alert-warning text-center mt-2" role="alert">
-                            No hay directores que mostrar
+                            No hay géneros que mostrar
                         </div>
                         :
                         <div className="d-block rounded-3 clip-hide">
@@ -39,8 +38,6 @@ const ListDirector = ({ setShow }) => {
                                         <th></th>
                                         <th>#</th>
                                         <th>Nombre</th>
-                                        <th>Fecha de nacimiento</th>
-                                        <th>avatar</th>
                                         <th>Acciones</th>
                                         <th></th>
                                     </tr>
@@ -52,27 +49,12 @@ const ListDirector = ({ setShow }) => {
                                                 <td></td>
                                                 <td>{i + 1}.</td>
                                                 <td style={{ maxWidth: "300px" }}>{item.name}</td>
-                                                <td>{formatDate(item.birthdate)}</td>
-                                                <td>
-                                                    <div className="avatar-table">
-                                                        <img src={item.avatar} alt={item.name}/>
-                                                    </div>
-                                                </td>
 
                                                 <td>
                                                     <IconButton
-                                                        icon="fa-solid fa-pen-to-square text-green"
-                                                        title="Editar director"
-                                                        onClick={() => {
-                                                            dispatch(cleanData());
-                                                            dispatch(setSelectedDirector({ value: item }));
-                                                            setShow(true);
-                                                        }}
-                                                    />
-                                                    <IconButton
                                                         icon="fa-solid fa-trash-can text-red"
-                                                        title="Eliminar director"
-                                                        onClick={async () => await confirmDelete(() => deleteDirector(item.id))}
+                                                        title="Eliminar género"
+                                                        onClick={async () => await confirmDelete(() => deleteGenre(item.id))}
                                                     />
                                                 </td>
                                                 <td></td>
@@ -90,4 +72,4 @@ const ListDirector = ({ setShow }) => {
 
 }
 
-export default ListDirector;
+export default ListGenre;

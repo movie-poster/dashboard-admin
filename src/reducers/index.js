@@ -8,6 +8,9 @@ import loginSlice from "./auth/reducerLogin";
 import recoverCredentialsSlice from "./auth/reducerRecoverCredentials";
 
 import directorSlice from "./director/reducerDirector";
+import actorSlice from "./actor/reducerActor";
+import movieSlice from "./movie/reducerMovie";
+import genreSlice from "./genre/reducerGenre";
 
 const reducer = {
     toastSlice,
@@ -17,6 +20,9 @@ const reducer = {
     loginSlice,
     recoverCredentialsSlice,
     directorSlice,
+    actorSlice,
+    movieSlice,
+    genreSlice,
 };
 
 export default reducer;
