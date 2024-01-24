@@ -1,0 +1,44 @@
+
+.alert-consumption__percentage {
+	position: absolute;
+	display: block;
+	color: #fff;
+	text-align: center;
+	z-index: 20;
+	top: 120px;
+	font-size: 60px;
+}
+
+.font-lilita-one {
+    font-family: 'Lilita One', cursive;
+}
+
+.alert-consumption__circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    box-shadow: 4px 4px 10px rgba(64, 50, 148, .4),
+        -6px -6px 6px #fff;
+}
+
+.gradient-orange {
+	background: linear-gradient(to top, #ffa245, #ffc145);
+}
+.gradient-blue {
+	background: linear-gradient(to top, #4569ff, #45adff);
+}
+
+.gradient-purple {
+	background: linear-gradient(to top, #c14afc, #d176ff);
+}
+
+.gradient-green {
+	background: linear-gradient(to top, #0f9355, #4abc87);
+}
+
+.gradient-red {
+	background: linear-gradient(to top, #c25456, #fe787a);
+}

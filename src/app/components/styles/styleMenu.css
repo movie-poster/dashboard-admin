@@ -1,0 +1,22 @@
+.accordion-item {
+    --bs-accordion-btn-icon-width: 0rem !important;
+}
+
+.accordion-header-menu button {
+    height: 45px !important;
+}
+
+.accordion-body{
+    background-color: white;
+}
+
+.li-Menu { 
+    margin-left: 0px !important;
+    border-radius: 0px !important;
+    padding: 0px !important;
+    max-height: 43px !important;
+}
+
+.row-inside-li{
+    padding-left: 2.2rem;
+}
